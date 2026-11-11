@@ -1,0 +1,53 @@
+---
+// src/components/Header.astro
+const navItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Posts', href: '/posts' },
+  { label: 'Categories', href: '/categories' },
+  { label: 'Authors', href: '/authors' },
+]
+---
+
+<header class="sticky top-0 z-40 border-b border-gray-100 bg-white/90 backdrop-blur">
+  <div class="container-custom flex h-16 items-center justify-between">
+    <a href="/" class="text-xl font-bold tracking-tight text-gray-900">
+      My<span class="text-primary-600">Blog</span>
+    </a>
+    <nav class="hidden items-center gap-8 md:flex">
+      {navItems.map((item) => (
+        <a href={item.href} class="text-sm font-medium text-gray-600 transition-colors hover:text-primary-600">
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <button id="menu-toggle" class="flex items-center justify-center rounded-md p-2 text-gray-600 md:hidden" aria-label="Toggle menu">
+      <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+      <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <nav id="mobile-menu" class="hidden flex-col gap-1 border-t border-gray-100 bg-white px-4 py-3 md:hidden">
+    {navItems.map((item) => (
+      <a href={item.href} class="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+        {item.label}
+      </a>
+    ))}
+  </nav>
+</header>
+
+<script>
+  const toggle = document.getElementById('menu-toggle')
+  const menu = document.getElementById('mobile-menu')
+  const iconOpen = document.getElementById('menu-icon-open')
+  const iconClose = document.getElementById('menu-icon-close')
+
+  toggle?.addEventListener('click', () => {
+    menu?.classList.toggle('hidden')
+    menu?.classList.toggle('flex')
+    iconOpen?.classList.toggle('hidden')
+    iconClose?.classList.toggle('hidden')
+  })
+</script>

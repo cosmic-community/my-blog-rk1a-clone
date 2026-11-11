@@ -1,0 +1,37 @@
+---
+// src/components/AuthorBioCard.astro
+import { getMetafieldValue } from '../../lib/cosmic'
+import type { Author } from '../../types'
+
+export interface Props {
+  author: Author
+}
+
+const { author } = Astro.props
+const name = getMetafieldValue(author.metadata?.name) || author.title
+const bio = getMetafieldValue(author.metadata?.bio)
+const avatar = author.metadata?.avatar
+---
+
+<div class="flex flex-col gap-4 rounded-2xl border border-gray-100 bg-gray-50 p-6 sm:flex-row sm:items-center">
+  {avatar?.imgix_url ? (
+    <img
+      src={`${avatar.imgix_url}?w=200&h=200&fit=crop&auto=format,compress`}
+      alt={name}
+      width="80"
+      height="80"
+      class="h-20 w-20 flex-shrink-0 rounded-full object-cover"
+    />
+  ) : (
+    <div class="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-primary-100 text-2xl font-semibold text-primary-700">
+      {name.charAt(0)}
+    </div>
+  )}
+  <div>
+    <p class="text-xs font-semibold uppercase tracking-wide text-primary-600">Written by</p>
+    <a href={`/authors/${author.slug}`} class="text-lg font-bold text-gray-900 hover:text-primary-600">
+      {name}
+    </a>
+    {bio && <p class="mt-2 text-sm text-gray-600">{bio}</p>}
+  </div>
+</div>

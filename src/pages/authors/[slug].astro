@@ -1,0 +1,61 @@
+---
+// src/pages/authors/[slug].astro
+import Layout from '../../layouts/Layout.astro'
+import PostCard from '../../components/PostCard.astro'
+import { getAllAuthors, getPostsByAuthor, getMetafieldValue } from '../../../lib/cosmic'
+import type { Author } from '../../../types'
+
+export async function getStaticPaths() {
+  const authors = await getAllAuthors()
+  return authors.map((author) => ({
+    params: { slug: author.slug },
+    props: { author },
+  }))
+}
+
+export interface Props {
+  author: Author
+}
+
+const { author } = Astro.props
+const posts = await getPostsByAuthor(author.id)
+const name = getMetafieldValue(author.metadata?.name) || author.title
+const bio = getMetafieldValue(author.metadata?.bio)
+const avatar = author.metadata?.avatar
+---
+
+<Layout title={name} description={bio || `Posts written by ${name}.`}>
+  <section class="container-custom py-16">
+    <div class="flex flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+      {avatar?.imgix_url ? (
+        <img
+          src={`${avatar.imgix_url}?w=240&h=240&fit=crop&auto=format,compress`}
+          alt={name}
+          width="96"
+          height="96"
+          class="h-24 w-24 rounded-full object-cover"
+        />
+      ) : (
+        <div class="flex h-24 w-24 items-center justify-center rounded-full bg-primary-100 text-3xl font-semibold text-primary-700">
+          {name.charAt(0)}
+        </div>
+      )}
+      <div>
+        <span class="badge">Author</span>
+        <h1 class="mt-2 text-3xl font-bold text-gray-900">{name}</h1>
+        {bio && <p class="mt-2 max-w-2xl text-gray-600">{bio}</p>}
+      </div>
+    </div>
+
+    <div class="mt-12">
+      <h2 class="mb-6 text-xl font-bold text-gray-900">Posts by {name}</h2>
+      {posts.length > 0 ? (
+        <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          {posts.map((post) => <PostCard post={post} />)}
+        </div>
+      ) : (
+        <p class="text-gray-500">No posts yet.</p>
+      )}
+    </div>
+  </section>
+</Layout>

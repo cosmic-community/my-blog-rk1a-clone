@@ -1,0 +1,16 @@
+---
+// src/components/CategoryBadge.astro
+import { getMetafieldValue } from '../../lib/cosmic'
+import type { Category } from '../../types'
+
+export interface Props {
+  category: Category
+}
+
+const { category } = Astro.props
+const name = getMetafieldValue(category.metadata?.name) || category.title
+---
+
+<a href={`/categories/${category.slug}`} class="badge transition-colors hover:bg-primary-100">
+  {name}
+</a>

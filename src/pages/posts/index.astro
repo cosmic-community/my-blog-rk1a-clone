@@ -1,0 +1,24 @@
+---
+// src/pages/posts/index.astro
+import Layout from '../../layouts/Layout.astro'
+import PostCard from '../../components/PostCard.astro'
+import { getAllPosts } from '../../../lib/cosmic'
+
+const posts = await getAllPosts()
+---
+
+<Layout title="Posts" description="Browse all posts on My Blog.">
+  <section class="container-custom py-16">
+    <div class="mb-10">
+      <h1 class="text-3xl font-bold text-gray-900">All Posts</h1>
+      <p class="mt-2 text-gray-600">{posts.length} {posts.length === 1 ? 'post' : 'posts'} published</p>
+    </div>
+    {posts.length > 0 ? (
+      <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    ) : (
+      <p class="text-gray-500">No posts found.</p>
+    )}
+  </section>
+</Layout>
