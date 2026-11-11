@@ -20,7 +20,7 @@ A modern, fast blog website built with Astro, powered by your existing Cosmic co
 
 Want to create your own version of this project with all the content and structure? Clone this Cosmic bucket and code repository to get started instantly:
 
-[![Clone this Project](https://img.shields.io/badge/Clone%20this%20Project-29abe2?style=for-the-badge&logo=cosmic&logoColor=white)](https://app.cosmicjs.com/projects/new?clone_bucket=6ae7814f5b93710bce4e2967&clone_repository=6ae7839a5b93710bce4e2ab4)
+[![Clone this Project](https://img.shields.io/badge/Clone%20this%20Project-29abe2?style=for-the-badge&logo=cosmic&logoColor=white)](https://app.cosmicjs.com/projects/new?clone_bucket=6af4824add6b09cd5e19e12f&clone_repository=6ae7839a5b93710bce4e2ab4)
 
 ## Prompts
 
